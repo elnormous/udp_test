@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 
     if ((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
     {
-        perror("Failed to create socket");
+        perror("Failed to create socket\n");
         return 1;
     }
 
@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 
     if (bind(fd, (struct sockaddr *)&myaddr, sizeof(myaddr)) < 0)
     {
-        perror("Failed to bind"); return 0;
+        perror("Failed to bind\n"); return 0;
     }
 
     printf("Waiting for data\n");
@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
         else
         {
             char* ip = (char*)&sender.sin_addr.s_addr;
-            printf("Received data from %d.%d.%d.%d\n", (int)ip[0], (int)ip[1], (int)ip[2], (int)ip[3]);
+            printf("Received %d bytes from %d.%d.%d.%d\n", (int)ret, (int)ip[0], (int)ip[1], (int)ip[2], (int)ip[3]);
         }
     }
 
