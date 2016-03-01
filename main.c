@@ -1,13 +1,22 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <string.h>
 #include <netinet/in.h>
 
-int main()
+int main(int argc, char* argv[])
 {
     int fd;
+    short port = 7000;
     struct sockaddr_in myaddr;
+
+    if (argc > 1)
+    {
+        port = (short)atoi(argv[1]);
+    }
+
+    printf("Port: %d\n", (int)port);
 
     if ((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
     {
@@ -18,7 +27,7 @@ int main()
     memset((char *)&myaddr, 0, sizeof(myaddr));
     myaddr.sin_family = AF_INET;
     myaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    myaddr.sin_port = htons(7000);
+    myaddr.sin_port = htons(port);
 
     if (bind(fd, (struct sockaddr *)&myaddr, sizeof(myaddr)) < 0)
     {
